@@ -18,14 +18,14 @@
                 <h2><i class="fas fa-robot"></i>時間管理大師</h2>
             </div>
             <div id="text">
-                <input type="text">
-                <button><i class="far fa-calendar-plus"></i>加入</button>
+                <input type="text" v-model="taskName" v-on:keyup.enter="addTask">
+                <button @click="addTask"><i class="far fa-calendar-plus"></i>加入</button>
             </div>
             <div id="typelist">
                 <ul>
-                    <li>全部</li>
-                    <li>已完成</li>
-                    <li>未完成</li>
+                    <li @click.prevent="taskEnevt = 'ALL'">全部</li>
+                    <li @click.prevent="taskEnevt = 'Done'">已完成</li>
+                    <li @click.prevent="taskEnevt = 'Doing'">未完成</li>
                     <li>刪除所有</li>
                 </ul>
             </div>
@@ -34,10 +34,10 @@
             <div id="content-title">
                 <span v-if="taskList.length > 0 ? title = '任務清單' : title = '尚未存在任務清單'"><i class="fas fa-book-medical"></i>{{ title }}</span>
             </div>
-            <div id="conten-task" v-for="item in taskList" :key="item.id">
+            <div id="conten-task" v-for="item in TaskList" :key="item.id">
                 <div id="task-left">
-                    <input type="checkbox" name="item.title" value="item.finish">
-                    <span for="item.title">{{ item.title }}</span>
+                    <input type="checkbox" name="item.title" v-model="item.finish" id="item.title">
+                    <label for="item.title">{{ item.title }}</label>
                 </div>
                 <div id="task-right">
                     <i class="far fa-edit"></i>

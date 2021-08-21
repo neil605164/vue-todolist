@@ -2,46 +2,42 @@ var app = new Vue({
     el: "#main",
     data: {
         title: "尚未存在任務清單",
-        taskList: [{
-                id: 1,
-                title: "task one",
+        taskName: "",
+        taskList: [],
+        newTaskList: [],
+        taskEnevt: "ALL",
+    },
+    methods: {
+        addTask() {
+            vm = this
+            obj = {
+                id: Date.now(),
+                title: vm.taskName,
                 finish: false,
-            },
-            {
-                id: 2,
-                title: "task two",
-                finish: false,
-            },
-            {
-                id: 3,
-                title: "task three",
-                finish: false,
-            },
-            {
-                id: 4,
-                title: "task four",
-                finish: false,
-            },
-            {
-                id: 5,
-                title: "task five",
-                finish: false,
-            },
-            {
-                id: 6,
-                title: "task six",
-                finish: false,
-            },
-            {
-                id: 7,
-                title: "task seven",
-                finish: false,
-            },
-            {
-                id: 8,
-                title: "task eight",
-                finish: false,
-            },
-        ],
+            }
+
+            vm.taskList.push(obj)
+
+            vm.taskName = ""
+            return
+        },
+    },
+    computed: {
+        // 取全部的任務清單
+        TaskList() {
+            vm = this
+            if (vm.taskEnevt == "ALL") {
+                vm.newTaskList = vm.taskList
+            }
+
+            if (vm.taskEnevt == "Doing") {
+                vm.newTaskList = vm.taskList.filter(item => item.finish == false)
+            }
+
+            if (vm.taskEnevt == "Done") {
+                vm.newTaskList = vm.taskList.filter(item => item.finish == true)
+            }
+            return this.newTaskList
+        }
     }
 })
