@@ -137,3 +137,10 @@ body {
     transform: translateX(-50%);
     clip-path: polygon(0 0, 100% 0, 98% 100%, 2% 100%);
 }
+
+.input-style {
+    border-style: dashed;
+    border-radius: 2px;
+    width: 200px;
+    height: 30px;
+}

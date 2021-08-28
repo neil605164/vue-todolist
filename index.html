@@ -18,7 +18,7 @@
                 <h2><i class="fas fa-robot"></i>時間管理大師</h2>
             </div>
             <div id="text">
-                <input type="text" v-model="taskName" v-on:keyup.enter="addTask">
+                <input type="text" v-model.trim="taskName" v-on:keyup.enter="addTask">
                 <button @click="addTask"><i class="far fa-calendar-plus"></i>加入</button>
             </div>
             <div id="typelist">
@@ -35,12 +35,15 @@
                 <span v-if="taskList.length > 0 ? title = '任務清單' : title = '尚未存在任務清單'"><i class="fas fa-book-medical"></i>{{ title }}</span>
             </div>
             <div id="conten-task" v-for="item in TaskList" :key="item.id">
-                <div id="task-left">
+                <div id="task-left" v-if="!item.isEdit">
                     <input type="checkbox" :name="item.title" v-model="item.finish" :id="item.id">
                     <label :for="item.id">{{ item.title }}</label>
                 </div>
+                <div id="task-left" v-if="item.isEdit">
+                    <input type="text" class="input-style" v-model.trim="item.title" v-on:keyup.enter="editTask(item)">
+                </div>
                 <div id="task-right">
-                    <i class="far fa-edit"></i>
+                    <i class="far fa-edit" @click.prevent="preventEdit(item)"></i>
                     <i class="fas fa-trash-alt" @click.prevent="deleteOne(item)"></i>
                 </div>
             </div>

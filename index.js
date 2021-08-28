@@ -5,6 +5,7 @@ var app = new Vue({
         taskName: "",
         taskList: [],
         taskEnevt: "ALL",
+        tmpTaskName: "",
     },
     methods: {
         addTask() {
@@ -19,6 +20,7 @@ var app = new Vue({
                 id: Date.now(),
                 title: vm.taskName,
                 finish: false,
+                isEdit: false,
             }
 
             vm.taskList.push(obj)
@@ -33,15 +35,35 @@ var app = new Vue({
 
             // 檢查傳入內容跟清單內容是否相同
             index = this.taskList.findIndex(function(task, key) {
-
-                console.log(task.id, item.id)
                 return task.id === item.id
             })
 
             this.taskList.splice(index, 1);
 
             return
-        }
+        },
+        editTask(item) {
+
+            if (item.title === "") {
+                item.title = this.tmpTaskName
+                item.isEdit = false
+                this.tmpTaskName = ""
+                return
+            }
+
+
+            index = this.taskList.findIndex(function(task, key) {
+
+                if (task.id === item.id) {
+                    task.isEdit = false
+                }
+                return
+            })
+        },
+        preventEdit(item) {
+            item.isEdit = !item.isEdit
+            this.tmpTaskName = item.title
+        },
     },
     computed: {
         // 取全部的任務清單
